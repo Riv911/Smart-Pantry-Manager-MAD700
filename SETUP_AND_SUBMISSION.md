@@ -1,21 +1,10 @@
-# Setup and submission checklist
+# Fast Windows setup
 
-## Android Studio
-Open `Smart-Pantry-Manager-MAD700` as an Android Studio project.
+1. Extract ZIP and open `Smart-Pantry-Manager-MAD700` in Android Studio.
+2. Install SDK Platform 35 and use a JDK 17 compatible environment.
+3. On first run, connect to internet and run `./gradlew.bat --version` from PowerShell. This downloads a SHA-256-verified Gradle wrapper JAR, then downloads Gradle 8.9. Sync, build and run in Android Studio.
+4. Run `RUN_CORE_TESTS_WINDOWS.bat` for standalone strict-matching unit tests.
+5. Follow the live acceptance steps in README, record REAL demo, capture genuine screenshots, and publish to GitHub with GITHUB_PUBLISHING.md.
+6. Replace preview evidence, add actual GitHub link, sign cover declaration, and submit one ZIP smaller than 50MB.
 
-## First launch
-The SQLite database is created automatically on first use and seeds 18 recipes.
-
-## CRUD test
-Create a pantry item, return to Pantry, edit it, then delete it. Close and reopen the app to verify persistence.
-
-## Strict-match test
-Use the recipe-testing sequence in the README. The matcher rejects any recipe with a missing ingredient or insufficient quantity.
-
-## Before submitting
-- Run the app on an emulator or physical device.
-- Capture actual screenshots from the running app for the report.
-- Record the required 5-7 minute live demonstration on your own Android Studio/emulator because this package was prepared in a non-Android build environment.
-- Create/connect the public GitHub repository and push the project with at least 10 genuine commits.
-- Replace the GitHub placeholder in the report with the real repository URL.
-- Zip the Android Studio source, final MP4 video, and report so the ZIP stays below 50 MB.
+**Important:** A successful full Android build or emulator screenshot cannot be confirmed here because the Android SDK/emulator is missing. Video and app-screenshot previews are not proof of the assignment's live-running functionality.

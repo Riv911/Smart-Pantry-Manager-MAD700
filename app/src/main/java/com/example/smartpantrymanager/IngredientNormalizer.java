@@ -64,7 +64,7 @@ public final class IngredientNormalizer {
         if (aliases.containsKey(value)) return aliases.get(value);
         if (value.endsWith("ies")) return value.substring(0, value.length() - 3) + "y";
         if (value.endsWith("es")) return value.substring(0, value.length() - 2);
-        if (value.endsWith("s") && !value.endsWith("ss")) return value.substring(0, value.length() - 1);
+        if (value.endsWith("s") && !value.endsWith("ss") && !value.endsWith("us") && !value.endsWith("ous")) return value.substring(0, value.length() - 1);
         return value;
     }
 }

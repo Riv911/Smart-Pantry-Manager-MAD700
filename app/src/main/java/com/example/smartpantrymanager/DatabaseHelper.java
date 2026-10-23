@@ -150,7 +150,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         today.set(java.util.Calendar.MINUTE, 0);
         today.set(java.util.Calendar.SECOND, 0);
         today.set(java.util.Calendar.MILLISECOND, 0);
-        long maxTime = today.getTimeInMillis() + days * 24L * 60L * 60L * 1000L;
+        java.util.Calendar lastDay = (java.util.Calendar) today.clone();
+        lastDay.add(java.util.Calendar.DAY_OF_YEAR, days);
+        long maxTime = lastDay.getTimeInMillis();
 
         for (PantryItem item : getAllPantryItems()) {
             if (item.getExpiryDate() == null || item.getExpiryDate().trim().isEmpty()) continue;

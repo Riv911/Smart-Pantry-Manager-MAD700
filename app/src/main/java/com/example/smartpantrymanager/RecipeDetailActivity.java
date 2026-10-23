@@ -23,7 +23,11 @@ public class RecipeDetailActivity extends Activity {
     private void loadRecipe() {
         long id = getIntent().getLongExtra("recipe_id", -1);
         Recipe recipe = databaseHelper.getRecipe(id);
-        if (recipe == null) return;
+        if (recipe == null) {
+            android.widget.Toast.makeText(this, "Recipe not found", android.widget.Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         ((TextView)findViewById(R.id.recipeTitle)).setText(recipe.getName());
         LinearLayout ingredientContainer = findViewById(R.id.ingredientContainer);

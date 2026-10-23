@@ -1,3 +1,15 @@
 @echo off
-REM Gradle wrapper launcher placeholder. Open the project in Android Studio to download the configured Gradle distribution.
-gradle %*
+setlocal
+set "APP_HOME=%~dp0"
+set "WRAPPER_JAR=%APP_HOME%gradle\wrapper\gradle-wrapper.jar"
+if not exist "%WRAPPER_JAR%" (
+  powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%APP_HOME%gradle\bootstrap-wrapper.ps1"
+  if errorlevel 1 exit /b 1
+)
+if defined JAVA_HOME (
+  set "JAVA_EXE=%JAVA_HOME%\bin\java.exe"
+) else (
+  set "JAVA_EXE=java.exe"
+)
+"%JAVA_EXE%" -classpath "%WRAPPER_JAR%" org.gradle.wrapper.GradleWrapperMain %*
+exit /b %ERRORLEVEL%

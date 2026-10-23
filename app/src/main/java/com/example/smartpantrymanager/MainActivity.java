@@ -88,11 +88,8 @@ public class MainActivity extends Activity {
         int days = prefs.getInt("expiry_days", 3);
         List<String> expiring = databaseHelper.getExpiringSoonItems(days);
         if (expiring.isEmpty()) return;
-        StringBuilder message = new StringBuilder("These items are expiring soon:
-
-");
-        for (String item : expiring) message.append("• ").append(item).append("
-");
+        StringBuilder message = new StringBuilder("These items are expiring soon:\n\n");
+        for (String item : expiring) message.append("• ").append(item).append("\n");
         new AlertDialog.Builder(this)
                 .setTitle("Expiring Soon")
                 .setMessage(message.toString())

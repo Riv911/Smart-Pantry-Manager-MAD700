@@ -6,7 +6,7 @@ public final class UnitConverter {
     private UnitConverter() { }
 
     public static UnitValue convertToBase(double quantity, String unit) {
-        if (unit == null) return null;
+        if (unit == null || !Double.isFinite(quantity) || quantity <= 0) return null;
         String u = unit.toLowerCase(Locale.US).trim();
         switch (u) {
             case "g": return new UnitValue(quantity, "mass");

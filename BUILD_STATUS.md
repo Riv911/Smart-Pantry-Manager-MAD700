@@ -1,19 +1,17 @@
-# Build and evidence status
+# Verification status after repairs (23 October 2026)
 
-## Verified in this environment
-- Java core classes compile with `javac`.
-- Core logic test passes: normalization, unit conversion, complete-match acceptance, missing ingredient rejection, and insufficient quantity rejection.
-- All XML resource files parse successfully.
-- Project contains five Android Activities.
-- Project uses SQLiteOpenHelper and custom BaseAdapter/ListView classes.
-- No GPS/location permission or Maps dependency was found in the project.
-- Local Git repository contains 12 milestone commits.
-- Demonstration MP4 is 392.5 seconds (6 minutes 32.5 seconds).
+Verified locally:
+- 17 Java source files parsed without syntax errors using the Java compiler parser.
+- Six pure Java classes plus the business-logic test harness compiled; the full set of normalisation, quantity, repeated-requirement, incompatible unit and strict inclusion/exclusion tests passed.
+- SQLite `CREATE TABLE` statements executed successfully in a local Python sqlite3 test instance; 18 recipe seed definitions present.
+- XML files parsed correctly; Java application layout, color and view ID references checked against resources.
+- Fixed broken MainActivity string literals, stricter validation, update-result check, expiry clear feature, date picker minimum date, and repeated ingredient strict match.
+- Original 6m32.5s preview video re-encoded and audio-filtered; container quality checked.
+- Revised report rendered to page images for page layout review.
 
-## Not verifiable in this environment
-- Android APK build/install/run: Android SDK and emulator tools are not installed here.
-- Live Android screenshots: the provided images are labelled previews.
-- Public GitHub remote: requires the student's authenticated GitHub account.
+Not verified locally:
+- Full Android Gradle build, installation on a phone/emulator, Android UI responsiveness, SQLite data persistence after app close/reopen.
+- Authentication, public GitHub repository creation, successful GitHub push, real chronological development history.
+- Real emulator/device screenshots, actual live app interaction video, or original student narration for a newly recorded app demo.
 
-## Required final student-side verification
-Run the project in Android Studio, perform the CRUD and strict-rule tests, capture genuine screenshots and a 5-7 minute live recording, publish the repository publicly, update the report with the real URL, and then create the final ZIP under 50 MB.
+A missing Android SDK/emulator and lack of user GitHub authentication prevent these steps in the repair environment. Follow README, GITHUB_PUBLISHING.md, VIDEO_RECORDING_AND_AUDIO_GUIDE.md, and FINAL_ACCEPTANCE_CHECKLIST.md on the student's Windows PC.

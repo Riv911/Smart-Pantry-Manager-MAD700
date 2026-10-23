@@ -38,6 +38,7 @@ public class AddEditIngredientActivity extends Activity {
         unitSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, units));
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
         findViewById(R.id.expiryButton).setOnClickListener(v -> chooseDate());
+        findViewById(R.id.clearExpiryButton).setOnClickListener(v -> expiryValue.setText("No expiry date"));
         findViewById(R.id.saveButton).setOnClickListener(v -> saveIngredient());
         findViewById(R.id.deleteButton).setOnClickListener(v -> deleteIngredient());
 
@@ -54,7 +55,7 @@ public class AddEditIngredientActivity extends Activity {
 
     private void loadExisting() {
         PantryItem item = databaseHelper.getPantryItem(ingredientId);
-        if (item == null) return;
+        if (item == null) { Toast.makeText(this, "Ingredient no longer exists", Toast.LENGTH_SHORT).show(); finish(); return; }
         nameInput.setText(item.getName());
         quantityInput.setText(String.valueOf(item.getQuantity()));
         expiryValue.setText(item.getExpiryDate() == null || item.getExpiryDate().isEmpty() ? "No expiry date" : item.getExpiryDate());
@@ -73,7 +74,12 @@ public class AddEditIngredientActivity extends Activity {
             selected.set(year, month, day);
             expiryValue.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(selected.getTime()));
         }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
-        dialog.getDatePicker().setMinDate(System.currentTimeMillis());
+        Calendar minDay = Calendar.getInstance();
+        minDay.set(Calendar.HOUR_OF_DAY, 0);
+        minDay.set(Calendar.MINUTE, 0);
+        minDay.set(Calendar.SECOND, 0);
+        minDay.set(Calendar.MILLISECOND, 0);
+        dialog.getDatePicker().setMinDate(minDay.getTimeInMillis());
         dialog.show();
     }
 
@@ -86,7 +92,7 @@ public class AddEditIngredientActivity extends Activity {
         double quantity;
         try { quantity = Double.parseDouble(quantityText); }
         catch (NumberFormatException e) { quantityInput.setError("Enter a valid number"); return; }
-        if (quantity <= 0) { quantityInput.setError("Quantity must be greater than zero"); return; }
+        if (!Double.isFinite(quantity) || quantity <= 0) { quantityInput.setError("Enter a finite quantity greater than zero"); return; }
 
         String unit = units[unitSpinner.getSelectedItemPosition()];
         String expiry = expiryValue.getText().toString();
@@ -102,7 +108,7 @@ public class AddEditIngredientActivity extends Activity {
         if (ingredientId == -1) result = databaseHelper.insertPantryItem(item);
         else result = databaseHelper.updatePantryItem(item);
 
-        if (result == -1) {
+        if (result <= 0) {
             Toast.makeText(this, "Unable to save ingredient", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -116,8 +122,12 @@ public class AddEditIngredientActivity extends Activity {
                 .setTitle("Delete Ingredient")
                 .setMessage("Delete this pantry item?")
                 .setPositiveButton("Delete", (dialog, which) -> {
-                    databaseHelper.deletePantryItem(ingredientId);
-                    finish();
+                    if (databaseHelper.deletePantryItem(ingredientId) > 0) {
+                        Toast.makeText(this, "Ingredient deleted", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Ingredient was not found", Toast.LENGTH_SHORT).show();
+                    }
                 })
                 .setNegativeButton("Cancel", null)
                 .show();

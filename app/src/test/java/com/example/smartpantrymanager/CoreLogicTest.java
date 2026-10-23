@@ -39,6 +39,25 @@ public class CoreLogicTest {
                 new RecipeIngredient(4, 2, "flour", "flour", 1200, "g"));
         check(StrictMatchEngine.qualifies(flourNeed, mixedUnits), "kg/g matching");
 
+        check(!StrictMatchEngine.qualifies(Collections.emptyList(), enough), "empty recipe rejected");
+        List<RecipeIngredient> twice = Arrays.asList(
+                new RecipeIngredient(6, 2, "milk", "milk", 150, "ml"),
+                new RecipeIngredient(7, 2, "milk", "milk", 150, "ml"));
+        check(!StrictMatchEngine.qualifies(twice, Collections.singletonList(
+                new PantryItem("Milk", "milk", 250, "ml", ""))), "repeated requirement aggregated");
+        check(StrictMatchEngine.qualifies(twice, Arrays.asList(
+                new PantryItem("Milk", "milk", 200, "ml", ""),
+                new PantryItem("milk", "milk", 150, "ml", ""))), "duplicate pantry records sum");
+        check(!StrictMatchEngine.qualifies(Collections.singletonList(
+                new RecipeIngredient(8, 3, "cheese", "cheese", 100, "g")),
+                Collections.singletonList(new PantryItem("Cheese", "cheese", 150, "ml", ""))), "incompatible units rejected");
+        check(!StrictMatchEngine.qualifies(omelette, Arrays.asList(
+                new PantryItem("Egg", "egg", 2, "pieces", ""),
+                new PantryItem("Tomatoes", "tomato", 1, "pieces", ""),
+                new PantryItem("Cheese", "cheese", Double.NaN, "g", ""))), "non-finite pantry amount rejected");
+        check(UnitConverter.convertToBase(Double.POSITIVE_INFINITY, "g") == null, "non-finite conversion rejected");
+        check("hummus".equals(IngredientNormalizer.canonicalize("Hummus")), "do not singularize hummus");
+
         System.out.println("All core logic checks passed: normalisation, unit conversion, strict inclusion, missing ingredient rejection and insufficient quantity rejection.");
     }
 

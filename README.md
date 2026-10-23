@@ -1,46 +1,43 @@
-# Smart Pantry Manager - Mobile App Development 700
+# Smart Pantry Manager — Mobile App Development 700
 
-A Java Android application that helps reduce food waste by tracking pantry ingredients and suggesting recipes that can be made **strictly** from ingredients already available.
+**Java Android app • Local SQLite • ListView + custom adapters • Five screens • 18 seeded recipes**
 
-## Core rule
-A recipe appears in Suggested Recipes only when every required ingredient is present in the pantry and the available quantity is at least the required quantity. Simple ingredient-name normalization (for example tomato/tomatoes) and compatible unit conversion are applied before comparison.
+Smart Pantry Manager helps households reduce food waste by tracking food at home and suggesting only recipes they can prepare with every required ingredient **and sufficient quantities**.
 
-## Technology
-- Java
-- Android Studio
-- SQLite using `SQLiteOpenHelper`
-- `ListView` + custom `BaseAdapter`
-- Multiple Activities + explicit Intents
-- `SharedPreferences` for simple settings
-- No maps, GPS, location permissions, payment processing, or external recipe APIs
+## Screens and functions
+- Pantry List — loads persisted ingredients from SQLite; Edit and Delete controls on each row.
+- Add/Edit Ingredient — validates a nonempty name and finite positive quantity; supports unit, optional expiry date, and clearing an existing expiry date.
+- Suggested Recipes — uses `StrictMatchEngine` to reject a recipe if any ingredient or quantity is missing, accounting for compatible units, singular/plural names, and repeated requirements.
+- Recipe Detail — lists all recipe ingredients with quantities and preparation steps.
+- Settings — stores preferred units and expiry-warning settings in `SharedPreferences`; expiry warnings appear in the pantry when relevant.
 
-## Main screens
-1. Pantry List
-2. Add/Edit Ingredient
-3. Suggested Recipes
-4. Recipe Detail
-5. Settings
+## Database design
+`DatabaseHelper` extends `SQLiteOpenHelper`, creates `pantry_items`, `recipes`, and `recipe_ingredients`, and seeds **18 recipes on first installation only**. Add, list/read, edit/update, and delete use genuine SQLite operations. Pantry data persists after the app is closed and reopened. SQLite was chosen for reliable, offline, device-local persistence; no account or server is needed.
 
-## Database
-SQLite is used because the application needs reliable on-device persistence and does not require cloud synchronisation. `DatabaseHelper` owns CRUD and seed data; `RecipeMatcher` owns the strict business rule.
+## Setup on Windows — Android Studio
+1. Install **Android Studio** from https://developer.android.com/studio and use its JDK 17 (or a compatible JDK 17 installation). Install **Android SDK Platform 35** and the Android emulator / platform tools from SDK Manager.
+2. Extract the ZIP. Open the `Smart-Pantry-Manager-MAD700` directory in Android Studio (`File` > `Open`). **Do not open the ZIP directly.**
+3. Ensure internet access for the first Gradle sync. The original project had missing Gradle wrapper files. The updated `gradlew.bat` automatically downloads **Gradle 8.9's official wrapper JAR**, checks its published SHA-256 hash, and then downloads Gradle 8.9 when needed. If Android Studio reports a missing wrapper, open a terminal in this directory, run `gradlew.bat --version`, then click Sync Project with Gradle Files.
+4. Use **Build** > **Make Project** to validate compilation. Choose an Android emulator or USB-debug-enabled device and click **Run**.
+5. In PowerShell from this project folder you can also run `./gradlew.bat assembleDebug` once the SDK, network and wrapper are ready. The resulting APK is under `app/build/outputs/apk/debug/`.
 
-## Setup / Run
-1. Open the `Smart-Pantry-Manager-MAD700` folder in Android Studio.
-2. Use an installed Android SDK (API 35 or a newer compatible SDK) and JDK 17+ as supported by your Android Studio/Gradle setup.
-3. Let Gradle sync and accept any SDK component prompts.
-4. Run on an Android emulator or physical Android device.
+## Desktop core logic checks (no Android SDK needed)
+Run `RUN_CORE_TESTS_WINDOWS.bat` using JDK 17 or newer. This compiles/test-runs the matching engine on the JVM and checks complete matches, missing items, quantities, unit conversions, duplicates, incompatible units, invalid values and basic normalisation.
 
-## Testing the strict rule
-A simple demonstration sequence is:
-- Add eggs, onion, tomato, cheese and oil.
-- Open Suggested Recipes and confirm Omelette appears.
-- Delete oil.
-- Reopen Suggested Recipes and confirm Omelette disappears.
-- Add oil again and confirm Omelette reappears.
-- Edit a quantity down below the recipe requirement and confirm it disappears.
+## Live functional acceptance walkthrough
+1. Start with no pantry items; confirm the empty-state message is visible.
+2. Attempt a blank ingredient name and quantity `0`, verifying validation messages.
+3. Add `eggs 2 pieces`, `onion 1 piece`, `tomato 1 piece`, `cheese 40 g`, and `oil 10 ml`.
+4. Open Suggestions; the **Omelette** should be present. Open its detail to review all five required ingredients and the method.
+5. Delete `oil` from the pantry and revisit Suggestions: **Omelette must disappear**.
+6. Add `oil 10 ml` back; **Omelette must reappear**. Edit `cheese` to `20 g` and confirm **Omelette disappears**; restore `40 g` and confirm it returns.
+7. Close and reopen the app: pantry entries remain. Set a future expiry date and demonstrate the Settings screen.
 
-## Git history
-This project is structured to be developed incrementally. The submission package includes a local Git history with meaningful staged milestones.
+## Scope and submission proof
+- No Maps SDK, location/GPS, payments, cloud login or recipe API.
+- Record a **real, voiced, continuous 5–7 minute Android demonstration** including GitHub history, CRUD, strict matching, persistence, three code concepts and database justification. The video preview in the package is **not a replacement for recorded app evidence**.
+- Replace the labelled report preview images with **screenshots captured from your running app**.
+- Create a GitHub repository and push this real local history; do not claim retroactive development dates. See `GITHUB_PUBLISHING.md`.
 
-## GitHub
-The final public repository link must be set to the actual student-owned GitHub repository before submission. A placeholder is intentionally not presented as a working remote URL.
+## Limitations of automated verification
+Core Java tests and source/resource audits were run, but no emulator or Android SDK was available in the repair environment. App build, installation and live screen recording must be verified on a real Android toolchain before final submission.
