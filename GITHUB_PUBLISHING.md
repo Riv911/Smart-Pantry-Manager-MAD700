@@ -1,41 +1,43 @@
-# Publishing to GitHub — Windows and Android Studio
+# Publishing and updating Smart Pantry Manager on GitHub
 
-Your submitted project contains an existing local `.git` history but **no authenticated remote**. Publishing requires access to your own GitHub account. I cannot open an account or push code to your account without authenticated authorisation. Never send a password or personal access token in chat.
+**Student:** Rivash Prithipal  
+**GitHub account:** `Riv911`  
+**Repository:** https://github.com/Riv911/Smart-Pantry-Manager-MAD700  
+**Git email:** `prithipalrivi@gmail.com`
 
-## A. Create or sign into a GitHub account
-1. Go to https://github.com/signup to make an account, or https://github.com/login to sign in. Verify the email address when requested.
-2. In GitHub click **+** (top-right) > **New repository** (or go to https://github.com/new).
-3. Enter `Smart-Pantry-Manager-MAD700`, choose **Public**, and **do not** check `Add a README`, `.gitignore`, or license: this local folder already contains files/history.
-4. Click **Create repository**. Keep the browser page open.
+The existing project was connected to GitHub from PowerShell. Keep working inside the existing local repository, which preserves its authentic development history. Do not create a second repository or reset its Git folder.
 
-## B. Link this existing local project to the repository
-Extract the final ZIP first, then open the `Smart-Pantry-Manager-MAD700` folder in PowerShell and run:
+## Verify the existing connection
+In PowerShell, open the folder containing `app/`, `README.md`, and `.git/`, then run:
 
 ```powershell
-git status
-git config user.name "YOUR REAL NAME"
-git config user.email "YOUR_GITHUB_EMAIL@example.com"
-git add .
-git commit -m "Repair strict matching validation and Gradle setup"
+git config user.name "Rivash Prithipal"
+git config user.email "prithipalrivi@gmail.com"
+git remote set-url origin https://github.com/Riv911/Smart-Pantry-Manager-MAD700.git
 git remote -v
-git remote add origin https://github.com/YOUR_USERNAME/Smart-Pantry-Manager-MAD700.git
-git branch -M main
-git push -u origin main
+git status
 ```
 
-Replace `YOUR_USERNAME` and the Git configuration examples with your real GitHub details. The repaired files are deliberately left uncommitted so the next commit reflects your own acknowledgement of the repairs; the existing local history remains intact. `git remote -v` should initially show no remote. If you already added `origin`, replace `git remote add ...` with `git remote set-url origin ...`. GitHub will prompt you to authenticate; use the browser/Git Credential Manager workflow, **not a GitHub password pasted into the terminal**.
+The fetch and push URLs should both show `Riv911/Smart-Pantry-Manager-MAD700.git`.
 
-## C. Alternative: GitHub CLI
-Install GitHub CLI from https://cli.github.com/ . In a terminal within this project, run:
+## Apply the revised files
+The updated submission ZIP includes `UPDATE_EXISTING_GITHUB_REPO.ps1` alongside the updated Android project. Extract it to a NEW directory so your working Git folder stays safe. Open PowerShell in the newly extracted ZIP folder, then run the command below (adjust only the existing repository folder path):
 
 ```powershell
-gh auth login
-gh repo create Smart-Pantry-Manager-MAD700 --public --source=. --remote=origin --push
+.\UPDATE_EXISTING_GITHUB_REPO.ps1 -RepositoryPath "C:\path\to\your\existing\Smart-Pantry-Manager-MAD700"
 ```
 
-Follow the login instructions. If the repository already exists, use method B instead.
+Replace the example repository path with the exact directory you have already connected. The script checks for uncommitted changes and preserves `.git/`.
 
-## D. Verify before submitting
-Open `https://github.com/YOUR_USERNAME/Smart-Pantry-Manager-MAD700` in a private/incognito browser window. Confirm README and source are readable, and review **Commits** on the main branch. Copy the **actual** link into your report; verify it after saving the report. The local history imported with the original ZIP has a cluster of milestone commits with near-identical timestamps, so do **not** present it as proof of work across several dates. Continue committing authentic new changes as you make them; never falsify dates or commit history. Ask the lecturer if retrospective history is acceptable.
+## Record and publish the change
+In your existing local repository:
 
-If you use Android Studio, its `Git > GitHub > Share Project on GitHub` action may be used **after** you sign in, but verify that it publishes this existing history and not a new unrelated repository.
+```powershell
+git add -A
+git commit -m "Polish project documentation and video walkthrough wording"
+git push origin main
+```
+
+If Git reports there is nothing to commit, compare the two directories and ensure the script was run with the correct path. Verify the result at https://github.com/Riv911/Smart-Pantry-Manager-MAD700.
+
+Git history should be authentic: do not rewrite dates or invent past changes. If your lecturer needs evidence of development over time, present your real commits and explain your actual workflow.

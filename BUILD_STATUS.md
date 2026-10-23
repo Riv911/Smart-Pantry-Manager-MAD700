@@ -12,6 +12,6 @@ Verified locally:
 Not verified locally:
 - Full Android Gradle build, installation on a phone/emulator, Android UI responsiveness, SQLite data persistence after app close/reopen.
 - Authentication, public GitHub repository creation, successful GitHub push, real chronological development history.
-- Real emulator/device screenshots, actual live app interaction video, or original student narration for a newly recorded app demo.
+- Real emulator/device screenshots, actual live app interaction video, or original student narration for a newly recorded app walkthrough.
 
 A missing Android SDK/emulator and lack of user GitHub authentication prevent these steps in the repair environment. Follow README, GITHUB_PUBLISHING.md, VIDEO_RECORDING_AND_AUDIO_GUIDE.md, and FINAL_ACCEPTANCE_CHECKLIST.md on the student's Windows PC.

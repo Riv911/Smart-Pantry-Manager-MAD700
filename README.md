@@ -31,11 +31,11 @@ Run `RUN_CORE_TESTS_WINDOWS.bat` using JDK 17 or newer. This compiles/test-runs 
 4. Open Suggestions; the **Omelette** should be present. Open its detail to review all five required ingredients and the method.
 5. Delete `oil` from the pantry and revisit Suggestions: **Omelette must disappear**.
 6. Add `oil 10 ml` back; **Omelette must reappear**. Edit `cheese` to `20 g` and confirm **Omelette disappears**; restore `40 g` and confirm it returns.
-7. Close and reopen the app: pantry entries remain. Set a future expiry date and demonstrate the Settings screen.
+7. Close and reopen the app: pantry entries remain. Set a future expiry date and show the Settings screen.
 
 ## Scope and submission proof
 - No Maps SDK, location/GPS, payments, cloud login or recipe API.
-- Record a **real, voiced, continuous 5–7 minute Android demonstration** including GitHub history, CRUD, strict matching, persistence, three code concepts and database justification. The video preview in the package is **not a replacement for recorded app evidence**.
+- Record a **real, voiced, continuous 5–7 minute Android walkthrough** including GitHub history, CRUD, strict matching, persistence, three code concepts and database justification. The video preview in the package is **not a replacement for recorded app evidence**.
 - Replace the labelled report preview images with **screenshots captured from your running app**.
 - Create a GitHub repository and push this real local history; do not claim retroactive development dates. See `GITHUB_PUBLISHING.md`.
 

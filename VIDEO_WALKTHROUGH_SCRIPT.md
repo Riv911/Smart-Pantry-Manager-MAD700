@@ -1,11 +1,11 @@
-# 5-7 minute live demonstration script
+# 5-7 minute live walkthrough script
 
 Target length: about 6 minutes 20 seconds.
 
 ## 0:00-0:55 GitHub walkthrough
 Open the public GitHub repository. Show the project README and scroll through at least ten meaningful commits. Briefly explain that the commits represent incremental milestones.
 
-## 0:55-2:45 Live app demonstration
+## 0:55-2:45 Live app walkthrough
 1. Open Pantry and show existing/seed data.
 2. Tap + Add, enter a test ingredient, save it, and point out that it is shown in the pantry list (Create + Read).
 3. Edit the same ingredient, change the quantity, save and show the updated value (Update).
@@ -25,7 +25,7 @@ Point to these actual files:
 - `RecipeMatcher.java` + `StrictMatchEngine.java`: every required recipe ingredient is checked and insufficient quantities reject the recipe.
 - `IngredientNormalizer.java`: handles simple singular/plural and alias differences.
 - `UnitConverter.java`: handles compatible units such as kg/g and L/ml.
-- `putExtra()` / `getLongExtra()`: demonstrates Intent data transfer between Activities.
+- `putExtra()` / `getLongExtra()`: shows Intent data transfer between Activities.
 
 ## 5:50-6:20 SQLite justification
 Explain that SQLite was chosen because the data only needs local persistence, the brief accepts it, and the app does not require cloud synchronisation.
